@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang=”pt-br”>
+<head>
+    <meta charset="utf-8"/>
+    <title>Sistema de Login</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#usuario-form').submit(function(event) {
+                event.preventDefault();
+                var usuario = $('#usuario').val();
+                var senha = $('#senha').val();
+                $.ajax({
+                    url: 'logica_acesso.php',
+                    type: 'POST',
+                    data: { usuario: usuario, senha: senha },
+                    success: function(response) {
+                        if (response == 'pessoas.html') {
+                            window.location = response;
+                        } else {
+                            $('#error-message').text(response);
+                        }
+                    }
+                });
+            });
+
+            $('#cadastro-button').click(function() {
+                window.location = 'tela_cadastro.html';
+            });
+        });
+    </script>
+</head>
+<body>
+    <h2>Sistema de Cadastro de Pessoas</h2>
+    <h3>Faça seu login, ou cadastre-se:</h3>
+    <form id="usuario-form" method="post" style="display: inline;">
+        <label for="usuario">usuario:</label>
+        <input type="text" id="usuario" name="usuario" required>
+        <label for="senha">Senha:</label>
+        <input type="password" id="senha" name="senha" required>
+        <input type="submit" value="Entrar">
+    </form>
+    <p id="error-message" style="color: red;"></p>
+
+    <button id="cadastro-button">Cadastrar</button>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8"/>
+    <title>Cadastro de Usuários</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('form').submit(function (event) {
+                event.preventDefault(); // Evita o envio tradicional do formulário
+
+                // Obter os valores dos campos de entrada
+                var nome = $('#nome').val();
+                var email = $('#email').val();
+                var endereco = $('#endereco').val();
+                var usuario_id = $('#usuario_id').val();
+                var telefone = $('#telefone').val();
+
+                // Enviar os dados via AJAX
+                $.ajax({
+                    url: 'logica_cadastro.php', 
+                    method: 'POST', // Método de envio
+                    data: {
+                        nome: nome,
+                        email: email,
+                        endereco: endereco,
+                        usuario_id: usuario_id,
+                        telefone: telefone
+                    },
+                    success: function (response) {
+                        // Manipular a resposta do servidor
+                        alert(response); // Exibir uma mensagem de sucesso
+                        $('form')[0].reset(); // Limpar os campos do formulário
+
+                        // Redirecionar para a página tela_acesso.html
+                        window.location.href = 'pessoas.html';
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <h2>Formulário de cadastro de pessoa</h2>
+    <form>
+        <label for="nome">Nome:</label>
+        <input type="text" name="nome" id="nome">
+
+        <label for="email">Email:</label>
+        <input type="text" name="email" id="email">
+
+        <label for="endereco">Endereço:</label>
+        <input type="text" name="endereco" id="endereco">
+
+        <label for="usuario_id">ID do Usuário:</label>
+        <input type="text" name="usuario_id" id="usuario_id">
+
+        <label for="telefone">Telefone:</label>
+        <input type="text" name="telefone" id="telefone">
+
+        <input type="submit" value="Cadastrar">
+    </form>
+</body>
+</html>
